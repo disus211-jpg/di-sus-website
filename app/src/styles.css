@@ -1,0 +1,144 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@source "../packages/quanta/src";
+@import "@higgsfield/quanta/tailwind.css";
+@import "tw-animate-css";
+
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
+
+@custom-variant dark (&:where([data-theme="default-dark"], [data-theme="default-dark"] *));
+
+/*
+ * Quanta is the visual source of truth. This file imports Quanta's Tailwind
+ * entry once; that entry brings in primitives, semantic theme variables,
+ * typography, z-index, border-width, and q-* component utilities.
+ *
+ * Generated app layout should use normal Tailwind spacing (`p-4`, `gap-2`,
+ * `mt-6`, `h-10`) and Quanta semantic utilities for color/type
+ * (`bg-q-background-primary`, `text-q-body-md-regular`). Do not use old numeric
+ * token classes such as `px-400` / `gap-200`, and do not reach for raw
+ * q-spacing vars in app code. Quanta component internals own their q-* classes.
+ *
+ * This site is a custom marketing site (Di Sustaita) — it does NOT integrate
+ * the Higgsfield SDK, so per website-builder-flow it uses custom Tailwind/CSS
+ * (dark neon brand system below) rather than Quanta tokens for page chrome.
+ *
+ * The `--spacing: 0.25rem` restoration keeps native Tailwind layout utilities
+ * stable for generated apps and legacy scaffold components.
+ */
+@theme {
+  --spacing: 0.25rem;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--hf-color-background-primary);
+  --color-foreground: var(--hf-color-text-primary);
+  --color-card: var(--hf-color-background-secondary);
+  --color-card-foreground: var(--hf-color-text-primary);
+  --color-popover: var(--hf-color-background-secondary);
+  --color-popover-foreground: var(--hf-color-text-primary);
+  --color-primary: var(--hf-color-button-brand);
+  --color-primary-foreground: var(--hf-color-button-label-brand);
+  --color-secondary: var(--hf-color-background-secondary);
+  --color-secondary-foreground: var(--hf-color-text-primary);
+  --color-muted: var(--hf-color-background-tertiary);
+  --color-muted-foreground: var(--hf-color-text-secondary);
+  --color-accent: var(--hf-color-overlay-hover);
+  --color-accent-foreground: var(--hf-color-text-primary);
+  --color-destructive: var(--hf-color-state-error-bg);
+  --color-destructive-foreground: var(--hf-color-state-error-fg);
+  --color-border: var(--hf-color-border-default);
+  --color-input: var(--hf-color-border-default);
+  --color-ring: var(--hf-color-border-focus);
+  --color-ring-offset-background: var(--hf-color-background-primary);
+
+  --color-chart-1: var(--hf-color-lime-500);
+  --color-chart-2: var(--hf-color-pink-500);
+  --color-chart-3: var(--hf-color-blue-500);
+  --color-chart-4: var(--hf-color-yellow-500);
+  --color-chart-5: var(--hf-color-purple-500);
+
+  --color-sidebar: var(--hf-color-background-secondary);
+  --color-sidebar-foreground: var(--hf-color-text-primary);
+  --color-sidebar-primary: var(--hf-color-button-brand);
+  --color-sidebar-primary-foreground: var(--hf-color-button-label-brand);
+  --color-sidebar-accent: var(--hf-color-overlay-hover);
+  --color-sidebar-accent-foreground: var(--hf-color-text-primary);
+  --color-sidebar-border: var(--hf-color-border-default);
+  --color-sidebar-ring: var(--hf-color-border-focus);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Di Sustaita brand tokens */
+  --ds-bg: #080808;
+  --ds-bg-raised: #0e0e12;
+  --ds-purple: #7b2fff;
+  --ds-blue: #2f6fff;
+  --ds-green: #25d366;
+  --ds-text: #f5f4fb;
+  --ds-text-muted: #a3a1b5;
+  --ds-border: rgba(123, 47, 255, 0.28);
+}
+
+@layer base {
+  html {
+    background-color: var(--ds-bg);
+    color: var(--ds-text);
+    color-scheme: dark;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--ds-bg);
+    color: var(--ds-text);
+    font-family: var(--font-sans);
+  }
+
+  * {
+    border-color: var(--ds-border);
+  }
+}
+
+@layer utilities {
+  .ds-glow-border {
+    border: 1px solid var(--ds-border);
+    box-shadow:
+      0 0 0 1px rgba(123, 47, 255, 0.06) inset,
+      0 0 24px -8px rgba(123, 47, 255, 0.35);
+  }
+
+  .ds-glow-border-blue {
+    border: 1px solid rgba(47, 111, 255, 0.32);
+    box-shadow:
+      0 0 0 1px rgba(47, 111, 255, 0.06) inset,
+      0 0 24px -8px rgba(47, 111, 255, 0.4);
+  }
+
+  .ds-gradient-text {
+    background: linear-gradient(90deg, #b98bff 0%, #7b2fff 45%, #2f6fff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .ds-card {
+    background: linear-gradient(180deg, rgba(20, 18, 30, 0.9), rgba(10, 9, 14, 0.9));
+    border-radius: 1rem;
+  }
+}
+
