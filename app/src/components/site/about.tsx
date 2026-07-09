@@ -1,54 +1,64 @@
-import { Reveal } from "../reveal";
-import { CursorGlowPhoto } from "./cursor-glow-photo";
+import { motion, useReducedMotion } from "motion/react";
+import {
+  Code, InstagramLogo, TrendUp, Megaphone,
+  EnvelopeSimple, MagnifyingGlass, PenNib, PaintBrush,
+  type Icon,
+} from "@phosphor-icons/react";
 import { useLanguage } from "../../lib/i18n/language-context";
 
-export function About() {
+const SERVICE_ICONS: Icon[] = [
+  Code, InstagramLogo, TrendUp, Megaphone,
+  EnvelopeSimple, MagnifyingGlass, PenNib, PaintBrush,
+];
+
+export function Services() {
+  const reduce = useReducedMotion();
   const { t } = useLanguage();
 
   return (
-    <section id="sobre-mi" className="relative py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
-        <Reveal>
-          <div className="relative mx-auto aspect-square w-full max-w-md">
-            <div className="absolute -inset-6 rounded-[2rem] bg-[#7B2FFF]/25 blur-3xl" />
-            <CursorGlowPhoto
-              src="/assets/about-photo.png"
-              alt={t.about.title}
-              aspectClassName="aspect-square"
-              imageClassName="object-cover object-[center_74%]"
-            />
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {t.about.title}
-          </h2>
-
-          <div className="mt-5 max-w-xl space-y-4">
-            {t.about.bioParagraphs.map((paragraph, pIndex) => (
-              <p
-                key={pIndex}
-                className="text-lg italic leading-relaxed text-white/70 sm:text-xl"
-              >
-                {paragraph.map((segment, sIndex) =>
-                  segment.highlight ? (
-                    <span
-                      key={sIndex}
-                      className="ds-gradient-text font-bold not-italic"
-                    >
-                      {segment.text}
-                    </span>
-                  ) : (
-                    <span key={sIndex}>{segment.text}</span>
-                  ),
-                )}
-              </p>
-            ))}
-          </div>
-        </Reveal>
+    <section id="servicios" className="relative py-24 sm:py-32">
+      {/* vertical spine */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 flex justify-center"
+      >
+        <div className="w-px bg-gradient-to-b from-[#2F6FFF]/0 via-[#2F6FFF]/20 to-[#2F6FFF]/0" />
       </div>
-    </section>
-  );
-}
 
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <motion.p
+          initial={{ opacity: 0, x: -16 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#2F6FFF]"
+        >
+          {t.services.heading}
+        </motion.p>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-3xl font-bold tracking-tight sm:text-4xl"
+        >
+          Lo que hago por tu negocio
+        </motion.h2>
+
+        {/* ── Stacked 3-D service cards ── */}
+        <div className="flex flex-col gap-4">
+          {t.services.items.map((title, index) => {
+            const ServiceIcon = SERVICE_ICONS[index];
+            const isBlue = index % 2 === 1;
+            const glow = isBlue
+              ? "border-[#2F6FFF]/35 hover:shadow-[0_0_40px_-8px_rgba(47,111,255,0.55)]"
+              : "border-[#7B2FFF]/35 hover:shadow-[0_0_40px_-8px_rgba(123,47,255,0.55)]";
+            const iconBg = isBlue
+              ? "border-[#2F6FFF]/40 bg-[#2F6FFF]/10 text-[#7fb0ff]"
+              : "border-[#7B2FFF]/40 bg-[#7B2FFF]/10 text-[#c9a6ff]";
+
+            return (
+              <motion.div
+                key={title}
+                initial={reduce ? false : { opacity: 0, x: index
